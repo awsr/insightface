@@ -90,16 +90,16 @@ class FaceDataset(Dataset):
                     A.MedianBlur(blur_limit=(1,7), p=0.1),
                     A.GaussianBlur(blur_limit=(1,7), p=0.1),
                     A.MotionBlur(blur_limit=(5,12), p=0.1),
-                    A.ImageCompression(quality_lower=50, quality_upper=90, p=0.05),
+                    A.ImageCompression(quality_range=(50, 90), p=0.05),
                     A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.2, rotate_limit=40, interpolation=cv2.INTER_LINEAR, 
-                        border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.8),
+                        border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.8),
                     A.HorizontalFlip(p=0.5),
                     RectangleBorderAugmentation(limit=0.33, fill_value=0, p=0.2),
                 ]
         transform_list += \
             [
-                A.geometric.resize.Resize(self.input_size, self.input_size, interpolation=cv2.INTER_LINEAR, always_apply=True),
-                A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+                A.Resize(self.input_size, self.input_size, interpolation=cv2.INTER_LINEAR, p=1),
+                A.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
                 ToTensorV2(),
             ]
         self.transform = A.ReplayCompose(

@@ -115,7 +115,7 @@ class MXFaceDataset(Dataset):
         if key in aug_mode_map:
             prob = aug_mode_map[key]
             transform_list.append(
-                A.ImageCompression(quality_lower=30, quality_upper=80, p=prob)
+                A.ImageCompression(quality_range=(30, 80), p=prob)
                 )
             transform_list.append(
                 A.MedianBlur(blur_limit=(1,7), p=prob)
@@ -126,7 +126,7 @@ class MXFaceDataset(Dataset):
         transform_list += \
             [
                 A.HorizontalFlip(p=0.5),
-                A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+                A.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
                 ToTensorV2(),
             ]
         #here, the input for A transform is rgb cv2 img
@@ -190,7 +190,7 @@ if __name__ == "__main__":
     #dataset_1.transform = A.Compose(
     #    [
     #        A.RandomBrightnessContrast(brightness_limit=0.125, contrast_limit=0.05, p=1.0),
-    #        A.ImageCompression(quality_lower=30, quality_upper=80, p=1.0),
+    #        A.ImageCompression(quality_range(30, 80), p=1.0),
     #        A.MedianBlur(blur_limit=(1,7), p=1.0),
     #        A.MotionBlur(blur_limit=(5,12), p=1.0),
     #        A.Affine(scale=(0.92, 1.08),  translate_percent=(-0.06, 0.06), rotate=(-6, 6), shear=None, interpolation=cv2.INTER_LINEAR, p=1.0),

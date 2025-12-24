@@ -12,10 +12,9 @@ class RectangleBorderAugmentation(ImageOnlyTransform):
             self,
             fill_value = 0,
             fg_limit = (0.7, 0.9),
-            always_apply=False,
             p=1.0,
             ):
-        super(RectangleBorderAugmentation, self).__init__(always_apply, p)
+        super(RectangleBorderAugmentation, self).__init__(p=p)
         #assert limit>0.0 and limit<1.0
         assert isinstance(fg_limit, tuple)
         assert fg_limit[1]>fg_limit[0]
@@ -49,10 +48,9 @@ class SunGlassAugmentation(ImageOnlyTransform):
             fill_value = 0,
             loc = [ (38, 52), (73, 52) ],
             rad_limit = (10, 20),
-            always_apply=False,
             p=1.0,
             ):
-        super(SunGlassAugmentation, self).__init__(always_apply, p)
+        super(SunGlassAugmentation, self).__init__(p=p)
         #assert limit>0.0 and limit<1.0
         assert isinstance(rad_limit, tuple)
         self.fill_value = 0
@@ -79,10 +77,9 @@ class ForeHeadAugmentation(ImageOnlyTransform):
             height_min = 0.2,
             height_max = 0.4,
             width_min = 0.5,
-            always_apply=False,
             p=1.0,
             ):
-        super(ForeHeadAugmentation, self).__init__(always_apply, p)
+        super(ForeHeadAugmentation, self).__init__(p=p)
         assert height_max > height_min
         #assert limit>0.0 and limit<1.0
         self.height_min = height_min
@@ -118,7 +115,7 @@ def get_aug_transform(cfg):
         #    )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.02, scale_limit=0.05, rotate_limit=5, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=1.0, always_apply=True)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=1.0)
             )
         is_test = True
 
@@ -132,7 +129,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.02, scale_limit=0.03, rotate_limit=6, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.3)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.3)
             )
     if '2' in aug_modes:
         transform_list.append(
@@ -140,7 +137,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1, rotate_limit=15, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.4)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.4)
             )
     if '3' in aug_modes:
         transform_list.append(
@@ -148,7 +145,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.2, rotate_limit=30, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.6)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.6)
             )
     if 'nist1' in aug_modes:
         transform_list.append(
@@ -156,7 +153,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.06, rotate_limit=6, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.4)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.4)
             )
     if 'nist2' in aug_modes:
         transform_list.append(
@@ -165,7 +162,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.06, scale_limit=0.06, rotate_limit=6, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.4)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.4)
             )
         transform_list.append(
                 A.OneOf([
@@ -178,7 +175,7 @@ def get_aug_transform(cfg):
             A.ToGray(p=0.05)
             )
         transform_list.append(
-            A.geometric.resize.RandomScale(scale_limit=(0.7, 0.9), interpolation=cv2.INTER_LINEAR, p=0.05)
+            A.RandomScale(scale_limit=(0.7, 0.9), interpolation=cv2.INTER_LINEAR, p=0.05)
             )
         transform_list.append(
             A.ISONoise(p=0.06)
@@ -190,7 +187,7 @@ def get_aug_transform(cfg):
             A.MotionBlur(blur_limit=(5,12), p=0.05)
             )
         transform_list.append(
-            A.ImageCompression(quality_lower=50, quality_upper=80, p=0.05)
+            A.ImageCompression(quality_range=(50, 80), p=0.05)
             )
     if 'prod' in aug_modes:
         transform_list.append(
@@ -199,7 +196,7 @@ def get_aug_transform(cfg):
             )
         transform_list.append(
             A.ShiftScaleRotate(shift_limit=0.06, scale_limit=0.1, rotate_limit=10, interpolation=cv2.INTER_LINEAR, 
-                border_mode=cv2.BORDER_CONSTANT, value=0, mask_value=0, p=0.4)
+                border_mode=cv2.BORDER_CONSTANT, fill=0, fill_mask=0, p=0.4)
             )
         transform_list.append(
                 A.OneOf([
@@ -213,7 +210,7 @@ def get_aug_transform(cfg):
             A.ToGray(p=0.05)
             )
         transform_list.append(
-            A.geometric.resize.RandomScale(scale_limit=(0.6, 0.9), interpolation=cv2.INTER_LINEAR, p=0.2)
+            A.RandomScale(scale_limit=(0.6, 0.9), interpolation=cv2.INTER_LINEAR, p=0.2)
             )
         transform_list.append(
             A.ISONoise(p=0.1)
@@ -225,16 +222,16 @@ def get_aug_transform(cfg):
             A.MotionBlur(blur_limit=(5,12), p=0.1)
             )
         transform_list.append(
-            A.ImageCompression(quality_lower=30, quality_upper=80, p=0.1)
+            A.ImageCompression(quality_range=(30, 80), p=0.1)
             )
     #if input_size!=112: # TODO!!
     #    transform_list.append(
-    #        A.geometric.resize.Resize(input_size, input_size, interpolation=cv2.INTER_LINEAR, always_apply=True)
+    #        A.Resize(input_size, input_size, interpolation=cv2.INTER_LINEAR, p=1)
     #        )
     transform_list += \
         [
             #A.HorizontalFlip(p=0.5),
-            A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+            A.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
             ToTensorV2(),
         ]
     #here, the input for A transform is rgb cv2 img

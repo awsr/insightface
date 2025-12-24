@@ -173,10 +173,9 @@ class MaskAugmentation(ImageOnlyTransform):
             mask_probs=[0.4,0.4,0.1,0.1],
             h_low = 0.33,
             h_high = 0.35,
-            always_apply=False,
             p=1.0,
             ):
-        super(MaskAugmentation, self).__init__(always_apply, p)
+        super(MaskAugmentation, self).__init__(p=p)
         self.renderer = MaskRenderer()
         assert len(mask_names)>0
         assert len(mask_names)==len(mask_probs)

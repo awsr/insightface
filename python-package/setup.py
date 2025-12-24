@@ -9,8 +9,7 @@ import sys
 import subprocess
 import platform
 import logging
-from setuptools import setup, find_packages
-from distutils.core import Extension
+from setuptools import setup, find_packages, Extension
 from Cython.Distutils import build_ext
 from Cython.Build import cythonize
 
@@ -128,7 +127,7 @@ setup(
     install_requires=requirements,
     headers=['insightface/thirdparty/face3d/mesh/cython/mesh_core.h'],
     ext_modules=ext_modules,
-    include_dirs=numpy.get_include(),
+    include_dirs=[numpy.get_include()],
 )
 
 print('pypandoc enabled:', pypandoc_enabled)

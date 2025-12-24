@@ -8,10 +8,9 @@ class RectangleBorderAugmentation(ImageOnlyTransform):
             self,
             fill_value = 0,
             limit = 0.3,
-            always_apply=False,
             p=1.0,
             ):
-        super(RectangleBorderAugmentation, self).__init__(always_apply, p)
+        super(RectangleBorderAugmentation, self).__init__(p=p)
         assert limit>0.0 and limit<1.0
         self.fill_value = 0
         self.limit = limit
