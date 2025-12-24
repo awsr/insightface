@@ -50,9 +50,9 @@ class RecAddMaskParamCommand(BaseInsightFaceCLICommand):
             if len(header.label)==2:
                 imgidx = np.array(range(1, int(header.label[0])))
             else:
-                imgidx = np.array(list(self.imgrec.keys))
+                imgidx = np.array(list(imgrec.keys))
         else:
-            imgidx = np.array(list(self.imgrec.keys))
+            imgidx = np.array(list(imgrec.keys))
         stat = [0, 0]
         print('total:', len(imgidx))
         for iid, idx in enumerate(imgidx):
