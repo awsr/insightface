@@ -6,6 +6,9 @@ import albumentations as A
 from albumentations.core.transforms_interface import ImageOnlyTransform
 from albumentations.pytorch import ToTensorV2
 
+# from insightface.app import MaskAugmentation, MaskRenderer
+
+
 class RectangleBorderAugmentation(ImageOnlyTransform):
 
     def __init__(
