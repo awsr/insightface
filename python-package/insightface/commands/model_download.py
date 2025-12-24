@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, _SubParsersAction
 
 from . import BaseInsightFaceCLICommand
 import os
@@ -15,7 +15,7 @@ def model_download_command_factory(args):
 class ModelDownloadCommand(BaseInsightFaceCLICommand):
     #_url_format = '{repo_url}models/{file_name}.zip'
     @staticmethod
-    def register_subcommand(parser: ArgumentParser):
+    def register_subcommand(parser: _SubParsersAction[ArgumentParser]):
         download_parser = parser.add_parser("model.download")
         download_parser.add_argument(
             "--root", type=str, default='~/.insightface', help="Path to location to store the models"

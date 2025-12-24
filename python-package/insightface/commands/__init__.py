@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
-from argparse import ArgumentParser
+from argparse import ArgumentParser, _SubParsersAction
 
 
 class BaseInsightFaceCLICommand(ABC):
     @staticmethod
     @abstractmethod
-    def register_subcommand(parser: ArgumentParser):
+    def register_subcommand(parser: _SubParsersAction[ArgumentParser]):
         raise NotImplementedError()
 
     @abstractmethod

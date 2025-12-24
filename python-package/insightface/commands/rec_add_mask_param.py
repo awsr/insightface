@@ -1,7 +1,7 @@
 
 import numbers
 import os
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 import mxnet as mx
 import numpy as np
@@ -20,7 +20,7 @@ def rec_add_mask_param_command_factory(args: Namespace):
 
 class RecAddMaskParamCommand(BaseInsightFaceCLICommand):
     @staticmethod
-    def register_subcommand(parser: ArgumentParser):
+    def register_subcommand(parser: _SubParsersAction[ArgumentParser]):
         _parser = parser.add_parser("rec.addmaskparam")
         _parser.add_argument("input", type=str, help="input rec")
         _parser.add_argument("output", type=str, help="output rec, with mask param")
