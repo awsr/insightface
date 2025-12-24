@@ -3,7 +3,7 @@ import sys
 import mxnet as mx
 import numpy as np
 import datetime
-from distutils.util import strtobool
+from setuptools._distutils.util import strtobool
 from ..config import config, generate_config
 from ..processing.generate_anchor import generate_anchors, anchors_plane
 from ..processing.bbox_transform import bbox_overlaps, bbox_transform, landmark_transform

@@ -4,7 +4,7 @@ to compile
 '''
 
 # setup.py
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 from Cython.Build import cythonize
 from Cython.Distutils import build_ext
 import numpy

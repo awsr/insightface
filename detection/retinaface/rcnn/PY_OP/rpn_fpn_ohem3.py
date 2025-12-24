@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 import mxnet as mx
 import numpy as np
-from distutils.util import strtobool
+from setuptools._distutils.util import strtobool
 from ..config import config, generate_config
 
 STAT = {0: 0}

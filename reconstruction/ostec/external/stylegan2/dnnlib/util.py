@@ -24,7 +24,7 @@ import hashlib
 import glob
 import uuid
 
-from distutils.util import strtobool
+from setuptools._distutils.util import strtobool
 from typing import Any, List, Tuple, Union
 
 
